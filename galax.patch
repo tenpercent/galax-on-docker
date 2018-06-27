@@ -1,0 +1,106 @@
+diff -Naur work/galax-1.1-old/base/encoding.ml work/galax-1.1/base/encoding.ml
+--- ./work/galax-1.1/base/encoding.ml	2018-06-27 14:29:10.154159426 -0500
++++ ./work/galax-1.1/base/encoding.ml	2018-06-27 14:29:38.232159045 -0500
+@@ -131,14 +131,14 @@
+   let write_ascii s =
+     (* Write the ASCII-encoded string 's' *)
+     let s' = convert_ascii s in
+-    Pxp_core_types.write os s' 0 (String.length s')
++    Pxp_types.write os s' 0 (String.length s')
+   in
+ 
+   let write_part j l =
+     (* Writes the substring of 'content' beginning at pos 'j' with length 'l'
+      *)
+     if to_enc = (from_enc :> encoding) then
+-      Pxp_core_types.write os content j l
++      Pxp_types.write os content j l
+     else begin
+       let s' = Netconversion.recode_string
+ 	         ~in_enc:(from_enc :> encoding)
+@@ -147,7 +147,7 @@
+ 			   convert_ascii ("&#" ^ string_of_int n ^ ";"))
+ 		 (String.sub content j l)
+       in
+-      Pxp_core_types.write os s' 0 (String.length s')
++      Pxp_types.write os s' 0 (String.length s')
+     end
+   in
+   let i = ref 0 in
+@@ -197,6 +197,6 @@
+   try
+     Pxp_aux.character enc global_warner k
+   with
+-  | Pxp_core_types.WF_error msg ->
++  | Pxp_types.WF_error msg ->
+       raise (Query (Undefined msg))
+ 
+diff -Naur work/galax-1.1-old/regress/test_core.ml work/galax-1.1/regress/test_core.ml
+--- ./work/galax-1.1/regress/test_core.ml	2018-06-27 14:29:10.254159425 -0500
++++ ./work/galax-1.1/regress/test_core.ml	2018-06-27 14:29:38.233159045 -0500
+@@ -732,7 +732,7 @@
+     let expected_stream = typed_stream_of_io (File_Input output_file) in
+     compare_streams case output_file result_stream expected_stream compared_plan
+   with
+-  | Pxp_core_types.Error _ as e ->
++  | Pxp_types.Error _ as e ->
+       if !(Conf.genresults)
+       then
+ 	begin
+@@ -755,7 +755,7 @@
+     let expected_stream = typed_stream_of_io (File_Input output_file) in
+     compare_streams case output_file result_stream expected_stream compared_plan
+   with
+-  | Pxp_core_types.Error _ as e ->
++  | Pxp_types.Error _ as e ->
+       if !(Conf.genresults)
+       then
+ 	begin
+diff -Naur work/galax-1.1-old/schema/schema_dtd_import.ml work/galax-1.1/schema/schema_dtd_import.ml
+--- ./work/galax-1.1/schema/schema_dtd_import.ml	2018-06-27 14:29:10.260159425 -0500
++++ ./work/galax-1.1/schema/schema_dtd_import.ml	2018-06-27 14:29:38.233159045 -0500
+@@ -15,7 +15,7 @@
+      This module imports a DTD as a set of XML Schema declarations.
+ *)
+ 
+-open Pxp_core_types
++open Pxp_types
+ open Pxp_dtd
+ 
+ open Error
+diff -Naur work/galax-1.1-old/streaming/streaming_parse.ml work/galax-1.1/streaming/streaming_parse.ml
+--- ./work/galax-1.1/streaming/streaming_parse.ml	2018-06-27 14:29:10.160159426 -0500
++++ ./work/galax-1.1/streaming/streaming_parse.ml	2018-06-27 14:29:38.234159045 -0500
+@@ -130,8 +130,6 @@
+       Some (fmkse_event (SAX_characters (make_text_desc data)) (!fi_ref))
+   | E_pinstr (target,value,entid) ->
+       Some (fmkse_event (SAX_processingInstruction (make_pi_desc target value)) (!fi_ref))
+-  | E_pinstr_member (target,value,entid) ->
+-      Some (fmkse_event (SAX_processingInstruction (make_pi_desc target value)) (!fi_ref))
+   | E_comment content ->
+       Some (fmkse_event (SAX_comment (make_comment_desc content)) (!fi_ref))
+   (* Silently ignoring super root event *)
+diff -Naur work/galax-1.1-old/tools/escaping/Makefile work/galax-1.1/tools/escaping/Makefile
+--- ./work/galax-1.1/tools/escaping/Makefile	2018-06-27 14:29:10.181159426 -0500
++++ ./work/galax-1.1/tools/escaping/Makefile	2018-06-27 14:29:33.213159113 -0500
+@@ -123,7 +123,7 @@
+ #########################################################################
+ 
+ updatedepend::
+-   $(MAKE) .depend DEPDEPEND=1
++	$(MAKE) .depend DEPDEPEND=1
+ 
+ clobber::
+ 	$(RM) .depend
+diff -Naur work/galax-1.1-old/tools/ucs2_to_utf8/Makefile work/galax-1.1/tools/ucs2_to_utf8/Makefile
+--- ./work/galax-1.1/tools/ucs2_to_utf8/Makefile	2018-06-27 14:29:10.183159426 -0500
++++ ./work/galax-1.1/tools/ucs2_to_utf8/Makefile	2018-06-27 14:29:22.749159255 -0500
+@@ -111,7 +111,7 @@
+ #     are generated before we need them.
+ #########################################################################
+ updatedepend::
+-   $(MAKE) .depend DEPDEPEND=1
++	$(MAKE) .depend DEPDEPEND=1
+ 
+ clobber::
+ 	$(RM) .depend
