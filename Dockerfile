@@ -15,4 +15,6 @@ WORKDIR $GODI_HOME/build/godi/godi-galax
 COPY galax.patch .
 RUN patch -p0 -i galax.patch
 RUN godi_make && godi_make install
+RUN mkdir /workdir
+WORKDIR /workdir
 ENTRYPOINT ["/bin/bash", "-l", "-c"]
