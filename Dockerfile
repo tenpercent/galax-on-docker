@@ -73,6 +73,7 @@ RUN set -ex; \
  make -k 2>make-error.log || true; \
  make 2>make2-error.log; \
  make install 2>make3-error.log; \
+ make clean
  
 FROM centos:7
 COPY --from=0 /opt /opt
