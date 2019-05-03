@@ -1,4 +1,4 @@
-FROM centos
+FROM centos:7
 RUN set -ex; \
  yum install -y epel-release; \
  yum install -y make gcc m4 pcre-static bzip2 git texlive texlive-comment texlive-preprint hevea
@@ -14,7 +14,7 @@ RUN set -ex; \
  curl -L http://sourceforge.net/projects/galax/files/galax-1.0.1-src.tar.gz/download | tar xz
 WORKDIR /opt/src/ocaml-3.10.2
 RUN set -ex; \
- ./configure -prefix /opt/ocaml ; \
+ ./configure -prefix /opt/ocaml; \
  make world; \
  make opt; \
  make install; \
@@ -22,7 +22,7 @@ RUN set -ex; \
 ENV PATH="/opt/ocaml/bin:${PATH}"
 WORKDIR /opt/src/findlib-1.1.2pl1 
 RUN set -ex; \
- ./configure ; \
+ ./configure; \
  make all; \
  make opt; \
  make install; \
@@ -51,7 +51,7 @@ RUN set -ex; \
  make clean
 WORKDIR /opt/src/ocamlnet-2.2.8.1
 RUN set -ex; \
- ./configure ; \
+ ./configure; \
  sed -i 's:\(^OCAMLC_OPTIONS\).*:\1 = -ccopt -D_GNU_SOURCE:' Makefile.conf; \
  make all; \
  make opt; \
@@ -59,7 +59,7 @@ RUN set -ex; \
  make clean
 WORKDIR /opt/src/pxp-1.2.0test1
 RUN set -ex; \
- ./configure ; \
+ ./configure; \
  make all; \
  make opt; \
  make install; \
