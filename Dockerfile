@@ -23,6 +23,6 @@ COPY --from=tenpercent/galax-on-docker:1.0.1.sf \
  $CDB/
 RUN set -ex; \
  ln -s /opt/galax/bin/galax-run /bin/galax; \
- tee test.xml "<doc><li>Hello</li><li>Galax</li></doc>"; \
- tee test.xq "//li/data()"; \
+ echo "<doc><li>Hello</li><li>Galax</li></doc>" > test.xml; \
+ echo "//li/data()" > test.xq; \
  galax -context-item test.xml test.xq
