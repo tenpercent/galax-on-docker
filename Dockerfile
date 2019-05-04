@@ -24,5 +24,5 @@ COPY --from=tenpercent/galax-on-docker:1.0.1.sf \
 RUN set -ex; \
  ln -s /opt/galax/bin/galax-run /bin/galax; \
  tee test.xml "<doc><li>Hello</li><li>Galax</li></doc>"; \
- tee test.xq "//li"; \
+ tee test.xq "//li/data()"; \
  galax -context-item test.xml test.xq
