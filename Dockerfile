@@ -21,3 +21,8 @@ COPY --from=tenpercent/galax-on-docker:1.0.1.sf \
  $CDB/composition_exclusion.mar \
  $CDB/composition.mar \
  $CDB/
+RUN set -ex; \
+ ln -s /opt/galax/bin/galax-run /usr/bin/galax; \
+ tee test.xml "<doc><li>Hello</li><li>Galax</li></doc>"; \
+ tee test.xq "//li"; \
+ galax -context-item test.xml test.xq
