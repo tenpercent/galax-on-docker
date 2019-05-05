@@ -1,10 +1,12 @@
-FROM busybox:glibc
 ARG SRC=tenpercent/galax:src
-COPY --from=$SRC \
+FROM $SRC as src
+
+FROM busybox:glibc
+COPY --from=src \
  /opt/galax/bin/galax-run \
  /opt/galax/bin/galax-run.opt \
  /opt/galax/bin/
-COPY --from=$SRC \
+COPY --from=src \
  /lib64/libm.so.6 \
  /lib64/libdl.so.2 \
  /lib64/libpthread.so.0 \
@@ -14,7 +16,7 @@ COPY --from=$SRC \
  /lib64/libpcre.so.1 \
  /lib64/
 ARG CDB=/opt/share/camomile/database
-COPY --from=$SRC \
+COPY --from=src \
  $CDB/general_category.mar \
  $CDB/scripts.mar \
  $CDB/combined_class.mar \
