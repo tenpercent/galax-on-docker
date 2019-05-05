@@ -1,9 +1,10 @@
 FROM busybox:glibc
-COPY --from=tenpercent/galax-on-docker:1.0.1.sf \
+ARG SRC=tenpercent/galax:src
+COPY --from=$SRC \
  /opt/galax/bin/galax-run \
  /opt/galax/bin/galax-run.opt \
  /opt/galax/bin/
-COPY --from=tenpercent/galax-on-docker:1.0.1.sf \
+COPY --from=$SRC \
  /lib64/libm.so.6 \
  /lib64/libdl.so.2 \
  /lib64/libpthread.so.0 \
@@ -13,7 +14,7 @@ COPY --from=tenpercent/galax-on-docker:1.0.1.sf \
  /lib64/libpcre.so.1 \
  /lib64/
 ARG CDB=/opt/share/camomile/database
-COPY --from=tenpercent/galax-on-docker:1.0.1.sf \
+COPY --from=$SRC \
  $CDB/general_category.mar \
  $CDB/scripts.mar \
  $CDB/combined_class.mar \
