@@ -1,5 +1,4 @@
-ARG SRC=tenpercent/galax:src
-FROM $SRC as src
+FROM tenpercent/galax:src as src
 
 FROM busybox:glibc
 COPY --from=src \
