@@ -4,7 +4,7 @@ RUN set -ex; \
  yum install -y make gcc m4 pcre-static bzip2 git texlive texlive-comment texlive-preprint hevea
 WORKDIR /opt/src
 RUN set -ex; \
- curl -L http://caml.inria.fr/pub/distrib/ocaml-3.10/ocaml-3.10.2.tar.gz | tar xz; \
+ curl -L http://caml.inria.fr/pub/distrib/ocaml-3.12/ocaml-3.12.1.tar.gz | tar xz; \
  curl -L http://download.camlcity.org/download/findlib-1.1.2pl1.tar.gz | tar xz; \
  git clone https://github.com/mmottl/pcre-ocaml.git; \
  curl -L http://caml.inria.fr/pub/old_caml_site/distrib/bazar-ocaml/camlidl-1.05.tar.gz | tar xz; \
@@ -12,7 +12,7 @@ RUN set -ex; \
  curl -L https://sourceforge.net/projects/ocamlnet/files/ocamlnet/2.2.8.1/ocamlnet-2.2.8.1.tar.gz/download | tar xz; \
  curl -L http://www.ocaml-programming.de/packages/pxp-1.2.0test1.tar.gz | tar xz; \
  curl -L http://sourceforge.net/projects/galax/files/galax-1.0.1-src.tar.gz/download | tar xz
-WORKDIR /opt/src/ocaml-3.10.2
+WORKDIR /opt/src/ocaml-3.12.1
 RUN set -ex; \
  ./configure -prefix /opt/ocaml; \
  make world; \
@@ -66,7 +66,7 @@ RUN set -ex; \
  make clean
 WORKDIR /opt/src/galax-1.0.1-src
 RUN set -ex; \
- sed -i 's:3.11:3.10:' configure; \
+ sed -i 's:3.11:3.12:' configure; \
  ./configure -galax-home /opt/galax; \
  sed -i '126s:^\s:\t:' tools/escaping/Makefile; \
  sed -i '114s:^\s:\t:' tools/ucs2_to_utf8/Makefile; \
